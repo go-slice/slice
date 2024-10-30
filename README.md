@@ -14,6 +14,12 @@ A simple, generic, and easy-to-use Go library that provides a rich set of utilit
 - **Advanced Operations**: Support for advanced functionality like filtering, sorting, shuffling, and reversing.
 - **Safe Indexing**: Support for negative indexes and index-bound checks.
 
+## Performance Characteristics
+
+- **No Extra Allocations**: This library is designed to avoid unnecessary memory allocations. Operations like shifting, popping, deleting, or inserting elements reuse the existing slice capacity wherever possible. This helps optimize memory usage and keeps performance consistent, especially in tight loops or high-frequency operations.
+- **Memory Zeroing**: When elements are deleted, shifted, or popped, the library automatically "zeroes out" the removed elements by setting them to the zero value of their type. This prevents potential memory leaks and ensures that the garbage collector can efficiently clean up unused elements.
+
+
 ## Installation
 
 ```bash
