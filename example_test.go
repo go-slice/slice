@@ -158,6 +158,28 @@ func ExampleSlice_Insert() {
 	// [one two three four]
 }
 
+func ExampleSlice_Replace() {
+	s := slice.FromRaw([]string{"one", "two", "two", "two", "two"})
+	s.Replace(2, "three", "four", "five")
+	fmt.Println(s)
+
+	// Output:
+	// [one two three four five]
+}
+
+func ExampleSlice_Replace_false() {
+	s := slice.FromRaw([]string{"one", "two", "two", "two"})
+
+	// cannot replace 3 elements starting from index 2
+	// the given slice does not have enough elements
+	fmt.Println(s.Replace(2, "three", "four", "five"))
+	fmt.Println(s)
+
+	// Output:
+	// false
+	// [one two two two]
+}
+
 func ExampleSlice_Insert_false() {
 	s := slice.FromRaw[string](nil)
 	fmt.Println(s.Insert(1, "one")) // the highest possible index to insert == len(s)

@@ -137,6 +137,22 @@ func (s *Slice[T]) Insert(index int, v ...T) (ok bool) {
 	return true
 }
 
+// Replace replaces s[index:index+len(v)] with v.
+// It does not succeed when the given slice does not have enough elements to be replaced.
+//
+//	s := slice.FromRaw([]string{"one", "two", "two", "two", "two"})
+//	s.Replace(2, "three", "four", "five")
+//	fmt.Println(s) // [one two three four five]
+func (s *Slice[T]) Replace(index int, v ...T) (ok bool) {
+	if index < 0 || index+len(v) > len(*s) {
+		return false
+	}
+
+	copy((*s)[index:index+len(v)], v)
+
+	return true
+}
+
 // Clone returns a new slice with the same length and copies to it all the elements from the existing slice.
 func (s *Slice[T]) Clone() Slice[T] {
 	if *s == nil {
