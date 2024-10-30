@@ -32,7 +32,7 @@ func (s *Slice[T]) Shift() (_ T, ok bool) {
 	}
 
 	start := *s
-	defer clear(start[0:1])
+	defer clearSlice(start[0:1])
 
 	r, *s = (*s)[0], (*s)[1:]
 
@@ -73,7 +73,7 @@ func (s *Slice[T]) Pop() (_ T, ok bool) {
 	}
 
 	start := *s
-	defer clear(start[len(start)-1:])
+	defer clearSlice(start[len(start)-1:])
 
 	r, *s = (*s)[len(*s)-1], (*s)[:len(*s)-1]
 
@@ -109,7 +109,7 @@ func (s *Slice[T]) Delete(index int, length int) (ok bool) {
 	}
 
 	start := *s
-	defer clear(start[len(start)-length:])
+	defer clearSlice(start[len(start)-length:])
 
 	*s = append((*s)[:index], (*s)[index+length:]...)
 
@@ -195,7 +195,7 @@ func (s *Slice[T]) Filter(keep func(index int, val T) bool) {
 		}
 	}
 
-	clear((*s)[len(n):])
+	clearSlice((*s)[len(n):])
 
 	*s = n
 }
