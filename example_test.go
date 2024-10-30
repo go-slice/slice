@@ -149,6 +149,15 @@ func ExampleSlice_Delete() {
 	// [two five]
 }
 
+func ExampleSlice_Delete_last() {
+	s := slice.FromRaw([]int{1, 2, 3, 4, 5})
+	s.Delete(-1 /* index */, 1 /* length */)
+
+	fmt.Println(s)
+
+	// Output: [1 2 3 4]
+}
+
 func ExampleSlice_Insert() {
 	s := slice.FromRaw([]string{"one", "four"})
 	s.Insert(1, "two", "three")
@@ -165,6 +174,15 @@ func ExampleSlice_Replace() {
 
 	// Output:
 	// [one two three four five]
+}
+
+func ExampleSlice_Replace_last() {
+	s := slice.FromRaw([]int{1, 2, 3, 4, 4})
+	s.Replace(-1, 5)
+	fmt.Println(s)
+
+	// Output:
+	// [1 2 3 4 5]
 }
 
 func ExampleSlice_Replace_false() {
