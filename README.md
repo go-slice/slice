@@ -13,7 +13,7 @@ It wraps native slices and offers an intuitive API for performing common operati
 - **Simple and Intuitive Syntax**: Easy-to-use methods for operations like push, pop, and insertion.
 - **Flexible Types**: Works with any type of slice thanks to Go’s generics.
 - **Advanced Operations**: Support for advanced functionality like filtering, sorting, shuffling, and reversing.
-- **Safe Indexing**: Support for negative indexes and index-bound checks.
+- **Safe Indexing**: Support for negative indexes and index-bounds checks.
 
 ## Installation
 
