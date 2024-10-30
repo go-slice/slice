@@ -138,7 +138,7 @@ func (s *Slice[T]) Insert(index int, v ...T) (ok bool) {
 }
 
 // Replace replaces s[index:index+len(v)] with v.
-// It does not succeed when the given slice does not have enough elements to be replaced..
+// It does not succeed when the given slice does not have enough elements to be replaced.
 //
 //	s := slice.FromRaw([]string{"one", "two", "two", "two", "two"})
 //	s.Replace(2, "three", "four", "five")
