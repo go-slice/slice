@@ -32,7 +32,8 @@ package main
 
 import (
     "fmt"
-    "github.com/yourusername/slice"
+	
+    "github.com/go-slice/slice"
 )
 
 func main() {
