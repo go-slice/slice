@@ -203,7 +203,7 @@ func ExampleSlice_Insert_false() {
 	fmt.Println(s.Insert(1, "one")) // the highest possible index to insert == len(s)
 
 	s = slice.FromRaw([]string{"zero", "one", "two"})
-	fmt.Println(s.Insert(-1, "minus one")) // index MUST be >= 0
+	fmt.Println(s.Insert(-100, "minus one")) // invalid index
 
 	// Output:
 	// false
