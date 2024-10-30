@@ -102,6 +102,8 @@ func (s *Slice[T]) DeleteOne(index int) (ok bool) {
 //	s.Delete(1, 3)
 //	fmt.Println(s) [1 5]
 func (s *Slice[T]) Delete(index int, length int) (ok bool) {
+	index = s.solveIndex(index)
+
 	if index < 0 || *s == nil || index+length > len(*s) {
 		return false
 	}
@@ -120,6 +122,8 @@ func (s *Slice[T]) Delete(index int, length int) (ok bool) {
 //	s.Insert(1 "two", "three")
 //	fmt.Println(s) // ["one", "two", "three", "four"]
 func (s *Slice[T]) Insert(index int, v ...T) (ok bool) {
+	index = s.solveIndex(index)
+
 	if index < 0 || index > len(*s) {
 		return false
 	}
@@ -144,6 +148,8 @@ func (s *Slice[T]) Insert(index int, v ...T) (ok bool) {
 //	s.Replace(2, "three", "four", "five")
 //	fmt.Println(s) // [one two three four five]
 func (s *Slice[T]) Replace(index int, v ...T) (ok bool) {
+	index = s.solveIndex(index)
+
 	if index < 0 || index+len(v) > len(*s) {
 		return false
 	}
@@ -201,9 +207,7 @@ func (s *Slice[T]) Filter(keep func(index int, val T) bool) {
 //	val, ok := x.Get(-1)
 //	fmt.Println(val) // 5
 func (s *Slice[T]) Get(index int) (_ T, ok bool) {
-	if index < 0 {
-		index += len(*s)
-	}
+	index = s.solveIndex(index)
 
 	if index < 0 || index >= len(*s) {
 		var r T
@@ -239,4 +243,12 @@ func (s *Slice[T]) Shuffle(randIntN func(n int) int) {
 		j := randIntN(i + 1)
 		(*s)[i], (*s)[j] = (*s)[j], (*s)[i]
 	}
+}
+
+func (s *Slice[T]) solveIndex(i int) int {
+	if i < 0 {
+		i += len(*s)
+	}
+
+	return i
 }
