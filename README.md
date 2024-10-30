@@ -12,7 +12,7 @@ A simple, generic, and easy-to-use Go library that provides a rich set of utilit
 - **Simple and Intuitive Syntax**: Easy-to-use methods for operations like push, pop, and insertion.
 - **Flexible Types**: Works with any type of slice thanks to Go’s generics.
 - **Advanced Operations**: Support for advanced functionality like filtering, sorting, shuffling, and reversing.
-- **Safe Indexing**: Support for negative indexes and index-bound checks.
+- **Safe Indexing**: Support for negative indexes and index-bounds checks.
 
 ## Performance Characteristics
 
@@ -30,33 +30,55 @@ go get github.com/go-slice/slice
 
 ### Creating a Slice
 
-To create a slice, either start with an empty slice or use the `FromRaw` function to wrap an existing slice:
+There are multiple ways to create a slice, either with or without predefined elements:
+
+#### Using an Empty Slice
+
+To create an empty slice of integers:
 
 ```go
 package main
 
 import (
     "fmt"
-	
+
     "github.com/go-slice/slice"
 )
 
 func main() {
-    // Create an empty slice of integers
+    // Create an empty slice
     var s slice.Slice[int]
+
+    // Add some elements
+    s.Push(4, 5, 6)
     
-    // Create a slice from an existing raw slice
-    s2 := slice.FromRaw([]int{1, 2, 3, 4})
-    
-    fmt.Println(s2)  // Output: [1 2 3 4]
+    fmt.Println(s)  // Output: [4 5 6]
 }
 ```
 
-You can also initialize a slice using the following syntax:
+#### Initializing with Elements
+
+You can also initialize the slice with elements using the following syntax:
 
 ```go
-s := slice.Slice[int]{}
+// Create a slice with predefined elements
+s := slice.Slice[int]{4, 5, 6}
+fmt.Println(s)  // Output: [4 5 6]
 ```
+
+#### Creating with Predefined Capacity
+
+To create a slice with a predefined capacity (which can help avoid redundant allocations when you know the size in advance):
+
+```go
+// Create a slice with a capacity of 100 but no initial elements
+s := slice.FromRaw(make([]int, 0, 100))
+
+// Now you can add elements without triggering new allocations until the slice exceeds the capacity
+s.Push(1, 2, 3)
+fmt.Println(s)  // Output: [1 2 3]
+```
+
 
 ### Basic Operations
 
@@ -245,6 +267,7 @@ fmt.Println(val)  // Output: 5
 - `Clone()`: Create a copy of the slice.
 - `Len()`: Get the length of the slice.
 - `Cap()`: Get the capacity of the slice.
+- `Empty()`: Check if the slice is empty.
 
 ## License
 
