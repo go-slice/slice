@@ -5,7 +5,8 @@
 
 # slice
 
-A simple, generic, and easy-to-use Go library that provides a rich set of utility functions for managing and manipulating slices. It wraps native slices and offers an intuitive API for performing common operations such as adding, removing, filtering, and modifying elements.
+A simple, generic, and easy-to-use Go library that provides a rich set of utility functions for managing and manipulating slices.
+It wraps native slices and offers an intuitive API for performing common operations such as adding, removing, filtering, and modifying elements.
 
 ## Features
 
@@ -17,7 +18,7 @@ A simple, generic, and easy-to-use Go library that provides a rich set of utilit
 ## Installation
 
 ```bash
-go get github.com/yourusername/slice
+go get github.com/go-slice/slice
 ```
 
 ## Usage Examples
@@ -31,7 +32,6 @@ package main
 
 import (
     "fmt"
-
     "github.com/yourusername/slice"
 )
 
@@ -44,6 +44,12 @@ func main() {
     
     fmt.Println(s2)  // Output: [1 2 3 4]
 }
+```
+
+You can also initialize a slice using the following syntax:
+
+```go
+s := slice.Slice[int]{}
 ```
 
 ### Basic Operations
@@ -75,13 +81,42 @@ fmt.Println(val)  // Output: 1
 fmt.Println(s)    // Output: [2 3 4 5]
 ```
 
+### Deleting Elements
+
+#### Delete a Single Element
+
+You can delete a single element from any position in the slice. For example, deleting the element at index `2`:
+
+```go
+var s slice.Slice[int]
+s.Push(1, 2, 3, 4, 5)
+s.Delete(2, 1)
+fmt.Println(s)  // Output: [1 2 4 5]
+```
+
+#### Delete the Last Element
+
+You can use a negative index to delete the last element. This can be done using `s.Delete(-1, 1)` or `s.DeleteOne(-1)`, as both are equivalent when removing the last element:
+
+```go
+var s slice.Slice[int]
+s.Push(1, 2, 3, 4, 5)
+s.Delete(-1, 1)
+fmt.Println(s)  // Output: [1 2 3 4]
+
+// Alternatively:
+s.DeleteOne(-1)
+fmt.Println(s)  // Output: [1 2 3 4]
+```
+
 ### Modifying the Slice
 
 #### Insert
 Insert elements at a specific index.
 
 ```go
-s := slice.FromRaw([]string{"one", "three"})
+var s slice.Slice[string]
+s.Push("one", "three")
 s.Insert(1, "two")
 fmt.Println(s)  // Output: ["one", "two", "three"]
 ```
@@ -90,18 +125,10 @@ fmt.Println(s)  // Output: ["one", "two", "three"]
 Replace a section of the slice with new elements.
 
 ```go
-s := slice.FromRaw([]string{"a", "b", "b", "b", "e"})
+var s slice.Slice[string]
+s.Push("a", "b", "b", "b", "e")
 s.Replace(2, "c", "d")
 fmt.Println(s)  // Output: ["a", "b", "c", "d", "e"]
-```
-
-#### Delete
-Delete elements from the slice.
-
-```go
-s := slice.FromRaw([]int{1, 2, 3, 4, 5})
-s.Delete(1, 3)
-fmt.Println(s)  // Output: [1 5]
 ```
 
 ### Advanced Operations
@@ -110,7 +137,8 @@ fmt.Println(s)  // Output: [1 5]
 Remove elements based on a custom condition.
 
 ```go
-s := slice.FromRaw([]int{1, 2, 3, 4, 5, 6})
+var s slice.Slice[int]
+s.Push(1, 2, 3, 4, 5, 6)
 s.Filter(func(_ int, v int) bool {
     return v%2 == 0  // Keep only even numbers
 })
@@ -121,7 +149,8 @@ fmt.Println(s)  // Output: [2 4 6]
 Reverse the order of elements in the slice.
 
 ```go
-s := slice.FromRaw([]int{1, 2, 3, 4, 5})
+var s slice.Slice[int]
+s.Push(1, 2, 3, 4, 5)
 s.Reverse()
 fmt.Println(s)  // Output: [5 4 3 2 1]
 ```
@@ -130,7 +159,8 @@ fmt.Println(s)  // Output: [5 4 3 2 1]
 Sort the slice using a custom comparison function.
 
 ```go
-s := slice.FromRaw([]int{5, 3, 1, 4, 2})
+var s slice.Slice[int]
+s.Push(5, 3, 1, 4, 2)
 s.Sort(func(a, b int) int {
     return a - b  // Sort in ascending order
 })
@@ -143,7 +173,8 @@ Randomly shuffle the elements in the slice.
 ```go
 import "math/rand"
 
-s := slice.FromRaw([]int{1, 2, 3, 4, 5})
+var s slice.Slice[int]
+s.Push(1, 2, 3, 4, 5)
 s.Shuffle(rand.Intn)
 fmt.Println(s)  // Output: [3 5 1 4 2] (shuffled randomly)
 ```
@@ -154,7 +185,8 @@ fmt.Println(s)  // Output: [3 5 1 4 2] (shuffled randomly)
 Get an element using a negative index, counting from the end.
 
 ```go
-s := slice.FromRaw([]int{1, 2, 3, 4, 5})
+var s slice.Slice[int]
+s.Push(1, 2, 3, 4, 5)
 val, _ := s.Get(-1)
 fmt.Println(val)  // Output: 5
 ```
