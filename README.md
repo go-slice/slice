@@ -101,11 +101,7 @@ You can use a negative index to delete the last element. This can be done using 
 ```go
 var s slice.Slice[int]
 s.Push(1, 2, 3, 4, 5)
-s.Delete(-1, 1)
-fmt.Println(s)  // Output: [1 2 3 4]
-
-// Alternatively:
-s.DeleteOne(-1)
+s.Delete(-1, 1) // Alternatively: s.DeleteOne(-1)
 fmt.Println(s)  // Output: [1 2 3 4]
 ```
 
