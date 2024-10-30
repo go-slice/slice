@@ -194,8 +194,8 @@ var s slice.Slice[int]
 s.Push(1, 2, 3, 4, 5, 6)
 
 // Keep only even numbers using the Filter method
-s.Filter(func(_ int, v int) bool {
-    return v%2 == 0
+s.Filter(func(_ int, val int) bool {
+    return val%2 == 0
 })
 fmt.Println(s)  // Output: [2 4 6]
 ```
