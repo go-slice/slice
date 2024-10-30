@@ -222,15 +222,6 @@ func ExampleSlice_Len() {
 	// 100
 }
 
-func ExampleSlice_ExtendCap() {
-	s := slice.FromRaw(make([]int, 0, 100))
-	s.ExtendCap(10)
-
-	fmt.Println(s.Cap())
-
-	// Output: 110
-}
-
 func ExampleSlice_Filter() {
 	x := slice.FromRaw([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
 	x.Filter(func(_ int, val int) bool {

@@ -159,13 +159,6 @@ func (s *Slice[T]) Len() int {
 	return len(*s)
 }
 
-// ExtendCap extends the capacity of the given slice.
-func (s *Slice[T]) ExtendCap(i int) {
-	n := make(Slice[T], len(*s), cap(*s)+i)
-	copy(n, *s)
-	*s = n
-}
-
 // Filter filters the given slice using the provided func.
 func (s *Slice[T]) Filter(keep func(index int, val T) bool) {
 	if *s == nil {
