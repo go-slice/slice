@@ -268,6 +268,7 @@ fmt.Println(val)  // Output: 5
 - `Len()`: Get the length of the slice.
 - `Cap()`: Get the capacity of the slice.
 - `Empty()`: Check if the slice is empty.
+- `Raw()`: Retrieve the underlying Go slice.
 
 ## License
 
