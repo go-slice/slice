@@ -35,6 +35,75 @@ func Test(t *testing.T) {
 	}
 }
 
+func TestUnderlyingSlice(t *testing.T) {
+	requireEqual := func(expected, given any) {
+		if !reflect.DeepEqual(expected, given) {
+			t.Helper()
+			t.Errorf("expected != given: %v != %v", expected, given)
+			t.FailNow()
+		}
+	}
+
+	data := make([]int, 0, 100)
+	s := slice.FromRaw(data[:0])
+
+	s.Push(2, 3)
+	requireEqual([]int{2, 3}, s.Raw())
+	requireEqual([]int{2, 3}, data[:2])
+
+	s.Unshift(1)
+	requireEqual([]int{1, 2, 3}, s.Raw())
+	requireEqual([]int{1, 2, 3}, data[:3])
+
+	s.Shift()
+	requireEqual([]int{2, 3}, s.Raw())
+	requireEqual([]int{0, 2, 3}, data[:3])
+
+	s.Pop()
+	requireEqual([]int{2}, s.Raw())
+	requireEqual([]int{0, 2, 0}, data[:3])
+
+	s.Unshift(1)
+	s.Push(3, 4, 5)
+	requireEqual([]int{1, 2, 3, 4, 5}, s.Raw())
+	requireEqual([]int{0, 1, 2, 3, 4, 5}, data[:6])
+
+	s.Delete(3, 2)
+	requireEqual([]int{1, 2, 3}, s.Raw())
+	requireEqual([]int{0, 1, 2, 3, 0, 0}, data[:6])
+
+	s.Push(4, 5)
+	requireEqual([]int{1, 2, 3, 4, 5}, s.Raw())
+	requireEqual([]int{0, 1, 2, 3, 4, 5}, data[:6])
+
+	s.Filter(func(_ int, val int) bool {
+		return val > 3
+	})
+	requireEqual([]int{4, 5}, s.Raw())
+	requireEqual([]int{0, 4, 5, 0, 0, 0}, data[:6])
+
+	s.Insert(0, 1, 2, 3)
+	requireEqual([]int{1, 2, 3, 4, 5}, s.Raw())
+	requireEqual([]int{0, 1, 2, 3, 4, 5, 0, 0, 0}, data[:9])
+
+	data[:2][1] = 99
+	requireEqual([]int{99, 2, 3, 4, 5}, s.Raw())
+	requireEqual([]int{0, 99, 2, 3, 4, 5, 0, 0, 0}, data[:9])
+
+	s.Shift()
+	s.Unshift(1)
+	s.Pop()
+	s.Pop()
+	s.Push(6, 7)
+	requireEqual([]int{1, 2, 3, 6, 7}, s.Raw())
+	requireEqual([]int{0, 0, 1, 2, 3, 6, 7, 0}, data[:8])
+
+	s.Replace(3, 4, 5)
+	requireEqual([]int{1, 2, 3, 4, 5}, s.Raw())
+	requireEqual([]int{0, 0, 1, 2, 3, 4, 5, 0}, data[:8])
+
+}
+
 func heapAlloc() uint64 {
 	runtime.GC()
 
